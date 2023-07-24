@@ -1,0 +1,101 @@
+﻿<UserControl x:Class="SimpleBank.View.AccountActionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SimpleBank.View"
+             xmlns:model="clr-namespace:SimpleBank.Model"
+             xmlns:viewModel="clr-namespace:SimpleBank.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style x:Key="ClientTextBlockHeader" TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="0 10 0 5"/>
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style x:Key="ClientTextBlock" TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="0 0 0 1"/>
+            <Setter Property="Width" Value="140"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style x:Key="ClientTextBlockForAmount" TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="20 0 0 1"/>
+            <Setter Property="Width" Value="140"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style x:Key="ClientTextBox" TargetType="{x:Type TextBox}">
+            <Setter Property="Margin" Value="0 0 0 7"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style x:Key="ClientComboBox" TargetType="{x:Type ComboBox}">
+            <Setter Property="Margin" Value="5 0 0 25"/>
+            <Setter Property="Padding" Value="5 3 5 3"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style x:Key="ClientButton" TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="5 5 0 0"/>
+            <Setter Property="Padding" Value="5 3 5 3"/>
+            <Setter Property="Width" Value="65"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.Resources>
+            <viewModel:MainWindowViewModel x:Key="MainWindowViewModel"/>
+        </Grid.Resources>
+        <StackPanel x:Name="spAccountAction"
+                    Margin="0 10 0 0">
+            <TextBlock Text="Клиент"
+                       Style="{StaticResource ClientTextBlockHeader}"/>
+            <TextBlock x:Name="tbAccountId"
+                     Text=""
+                     Visibility="Collapsed"></TextBlock>
+            <TextBlock x:Name="tbFIO"
+                       Text=""
+                       Style="{StaticResource ClientTextBlock}"
+                       Background="Lavender"/>
+            <TextBlock Text="Счет"
+                       Style="{StaticResource ClientTextBlockHeader}"/>
+            <ComboBox x:Name="cbAccountType"
+                      
+                      Style="{StaticResource ClientComboBox}">
+                <ComboBoxItem Content="Зарплатный"></ComboBoxItem>
+                <ComboBoxItem Content="Депозитный"></ComboBoxItem>
+            </ComboBox>
+            <StackPanel Orientation="Horizontal"
+                        Width="140">
+                <Button Content="Открыть"
+                        Command="{Binding OpenAccountCommand, Mode=OneWay, Source={StaticResource MainWindowViewModel}}"
+                        CommandParameter="{Binding ElementName=spAccountAction, Mode=OneWay}"
+                        Style="{StaticResource ClientButton}"/>
+                <Button Content="Закрыть"
+                        Command="{Binding CloseAccountCommand, Mode=OneWay, Source={StaticResource MainWindowViewModel}}"
+                        CommandParameter="{Binding ElementName=spAccountAction, Mode=OneWay}"
+                        Style="{StaticResource ClientButton}"/>
+            </StackPanel>
+            <TextBlock Text="Действия по счету"
+                       Style="{StaticResource ClientTextBlockHeader}"/>
+            <TextBlock Text="Сумма"
+                       Style="{StaticResource ClientTextBlockForAmount}"/>
+            <TextBox x:Name="tbAmount"
+                     Style="{StaticResource ClientTextBox}"/>
+            <StackPanel Orientation="Horizontal"
+                        Width="140">
+                <Button Content="Внести"
+                        Command="{Binding PutMoneyCommand, Mode=OneWay, Source={StaticResource MainWindowViewModel}}"
+                        CommandParameter="{Binding ElementName=spAccountAction, Mode=OneWay}"
+                        Style="{StaticResource ClientButton}"/>
+                <Button Content="Снять"
+                        Command="{Binding WithdrawMoneyCommand, Mode=OneWay, Source={StaticResource MainWindowViewModel}}"
+                        CommandParameter="{Binding ElementName=spAccountAction, Mode=OneWay}"
+                        Style="{StaticResource ClientButton}"/>
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</UserControl>

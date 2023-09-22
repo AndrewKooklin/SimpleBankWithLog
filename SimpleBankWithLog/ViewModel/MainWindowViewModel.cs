@@ -31,6 +31,7 @@ namespace SimpleBank.ViewModel
         private int _selectedCount = 0;
 
         private ObservableCollection<Person> _persons;
+        private ObservableCollection<UserOperation> _userOperations;
 
         public ObservableCollection<Person> Persons
         {
@@ -42,7 +43,17 @@ namespace SimpleBank.ViewModel
             }
         }
 
-        
+        public ObservableCollection<UserOperation> UserOperations
+        {
+            get { return _userOperations; }
+            set
+            {
+                _userOperations = value;
+                OnPropertyChanged(nameof(UserOperations));
+            }
+        }
+
+
         //private ViewModelBase _leftCurrentViewModel;
         private UserControl _rightCurrentView;
 
@@ -92,6 +103,10 @@ namespace SimpleBank.ViewModel
         public ICommand TransactionWithSelfAccountsCommand { get; set; }
 
         public ICommand TransactionBetweenClientsCommand { get; set; }
+
+        public ICommand OpenListOperationsCommand { get; set; }
+
+        public ICommand SelectUserCommand { get; set; }
 
         public int? SelectedIndexPerson { get; set; }
 
@@ -256,6 +271,10 @@ namespace SimpleBank.ViewModel
             TransactionWithSelfAccountsCommand = new TransactionWithSelfAccountsCommand(Persons);
 
             TransactionBetweenClientsCommand = new TransactionBetweenClientsCommand(Persons);
+
+            OpenListOperationsCommand = new OpenListOperationsCommand(_db);
+
+            SelectUserCommand = new SelectUserCommand();
         }
 
         

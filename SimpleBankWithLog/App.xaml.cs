@@ -1,5 +1,6 @@
 ﻿using SimpleBank.Data;
 using SimpleBank.Model;
+using SimpleBank.View;
 using SimpleBank.ViewModel;
 using System;
 using System.Windows;
@@ -15,6 +16,7 @@ namespace SimpleBank
         public static MainWindowViewModel _mainWindowViewModel;
         public static PersonViewModel personViewModel;
         public static MainWindow mainWindow;
+        public static RegistrationWindow registrationWindow;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -27,15 +29,8 @@ namespace SimpleBank
                 Console.WriteLine(ex.Message);
             }
 
-            mainWindow = new MainWindow();
-
-            _mainWindowViewModel = new MainWindowViewModel();
-
-            personViewModel = new PersonViewModel(_mainWindowViewModel);
-
-            mainWindow.DataContext = _mainWindowViewModel;
-            
-            mainWindow.Show();
+            registrationWindow = new RegistrationWindow();
+            registrationWindow.Show();
 
             base.OnStartup(e);
         }

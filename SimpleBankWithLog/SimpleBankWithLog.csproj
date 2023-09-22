@@ -206,7 +206,9 @@
     </Compile>
     <Compile Include="Commands\CloseAccountCommand.cs" />
     <Compile Include="Commands\OpenAccountCommand.cs" />
+    <Compile Include="Commands\OpenListOperationsCommand.cs" />
     <Compile Include="Commands\PutMoneyCommand.cs" />
+    <Compile Include="Commands\SelectUserCommand.cs" />
     <Compile Include="Commands\TransactionBetweenClientsCommand.cs" />
     <Compile Include="Commands\TransactionWithSelfAccountsCommand.cs" />
     <Compile Include="Commands\WithdrawMoneyCommand.cs" />
@@ -216,6 +218,7 @@
     <Compile Include="Model\IAccountContrvariant.cs" />
     <Compile Include="Model\IAccountCovariant.cs" />
     <Compile Include="Model\TransactionBetweenClients.cs" />
+    <Compile Include="Model\UserOperation.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\PersonViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
@@ -224,6 +227,15 @@
     </Compile>
     <Compile Include="View\PersonView.xaml.cs">
       <DependentUpon>PersonView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RecordActionsWindow.xaml.cs">
+      <DependentUpon>RecordActionsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RecordOperationsWindow.xaml.cs">
+      <DependentUpon>RecordOperationsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RegistrationWindow.xaml.cs">
+      <DependentUpon>RegistrationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TransactionBetweenClientsView.xaml.cs">
       <DependentUpon>TransactionBetweenClientsView.xaml</DependentUpon>
@@ -254,6 +266,18 @@
     <Page Include="View\PersonView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\RecordActionsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RecordOperationsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RegistrationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TransactionBetweenClientsView.xaml">
       <Generator>MSBuild:Compile</Generator>

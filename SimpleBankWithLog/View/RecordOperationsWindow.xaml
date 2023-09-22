@@ -1,0 +1,110 @@
+﻿<Window x:Class="SimpleBank.View.RecordOperationsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SimpleBank.View"
+        mc:Ignorable="d"
+        Title="RecordActions" 
+        Height="450" 
+        Width="800"
+        Background="#FFCCF6EE">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" MinWidth="600"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="1" 
+              Grid.Column="0">
+            <Grid.Resources>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="100*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" 
+                    Grid.Column="0" 
+                    Orientation="Horizontal" 
+                    Margin="10,10,0.2,0.2">
+                <Label  x:Name="lRole"
+                        Content="Role" 
+                        Width="111"
+                        Margin="0"
+                        HorizontalContentAlignment="Center"
+                        Background="DarkGray"/>
+                <Label  x:Name="lDataOperation"
+                        Content="DataOperation" 
+                        Width="150"
+                        Margin="3 0 0 0"
+                        HorizontalContentAlignment="Center"
+                        Background="DarkGray"/>
+                <Label  x:Name="lOperation"
+                        Content="Operation" 
+                        Width="330"
+                        Margin="3 0 0 0"
+                        HorizontalContentAlignment="Center"
+                        Background="DarkGray"/>
+                <Label x:Name="lSum"
+                        Content="Sum" 
+                        Width="80"
+                        Margin="3 0 0 0"
+                        HorizontalContentAlignment="Center"
+                        Background="DarkGray"/>
+            </StackPanel>
+
+            <ScrollViewer Grid.Row="1" 
+                      Grid.Column="0"
+                      Margin="0" 
+                      VerticalScrollBarVisibility="Auto" 
+                      HorizontalAlignment="Left">
+                <StackPanel x:Name="spListOperations" 
+                        Grid.Row="1" 
+                        Grid.Column="0" 
+                        Margin="10 0 0 0" 
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Top">
+                    <ListBox x:Name="lbPersonsItems"
+                         ItemsSource="{Binding UserOperations, UpdateSourceTrigger=PropertyChanged}"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch"
+                         Margin="0" 
+                         Background="#FFDFFFCE"
+                         FontSize="14">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="Black" 
+                                    BorderThickness="0 0 0 1" 
+                                    Padding="0" 
+                                    Margin="0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Name="tbRole" 
+                                               Text="{Binding Role}"
+                                               Width="111"
+                                               Margin="0 0 0 0"/>
+                                        <TextBlock x:Name="tbDataOperation" 
+                                               Text="{Binding DataOperation}"
+                                               Width="109"
+                                               Margin="3 0 0 0"/>
+                                        <TextBlock x:Name="tbOperation" 
+                                               Text="{Binding Operation}"
+                                               Width="109"
+                                               Margin="3 0 0 0"/>
+                                        <TextBlock x:Name="tbSum" 
+                                               Text="{Binding Sum}" 
+                                               Width="106"
+                                               Margin="3 0 0 0"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+
+    </Grid>
+</Window>

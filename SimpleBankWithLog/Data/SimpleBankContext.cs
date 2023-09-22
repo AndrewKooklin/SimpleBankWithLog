@@ -17,6 +17,8 @@ namespace SimpleBank.Data
 
         public DbSet<DepositAccount> DepositAccounts { get; set; }
 
+        public DbSet<UserOperation> UserOperations { get; set; }
+
         public SimpleBankContext() : base("SimpleBankConnectionSQLite")
         {
 

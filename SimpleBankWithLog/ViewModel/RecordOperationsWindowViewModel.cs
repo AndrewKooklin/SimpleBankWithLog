@@ -1,40 +1,39 @@
 ﻿using SimpleBank.Data;
 using SimpleBank.Model;
-using SimpleBank.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
-namespace SimpleBank.Commands
+namespace SimpleBank.ViewModel
 {
-    public class OpenListOperationsCommand : ICommand
+    public class RecordOperationsWindowViewModel : ViewModelBase
     {
-        private RecordOperationsWindow recordOperationsWindow;
-        private SimpleBankContext _db;
+        private SimpleBankContext db;
 
-        public OpenListOperationsCommand(SimpleBankContext db)
+        private ObservableCollection<UserOperation> _userOperations;
+
+        public ObservableCollection<UserOperation> UserOperations
         {
-            this._db = db;
+            get { return _userOperations; }
+            set
+            {
+                _userOperations = value;
+                OnPropertyChanged(nameof(UserOperations));
+            }
         }
 
-        public event EventHandler CanExecuteChanged;
-
-        public bool CanExecute(object parameter)
+        public RecordOperationsWindowViewModel(SimpleBankContext _db)
         {
-            return true;
+            UserOperations = new ObservableCollection<UserOperation>();
+            db = _db;
+            UserOperations = GEtAllOperations(db);
         }
 
-        public void Execute(object parameter)
+        public RecordOperationsWindowViewModel()
         {
-            recordOperationsWindow = new RecordOperationsWindow();
-
-            recordOperationsWindow.lbPersonsItems.ItemsSource = GEtAllOperations(_db);
-
-            recordOperationsWindow.Show();
         }
 
         private ObservableCollection<UserOperation> GEtAllOperations(SimpleBankContext db)

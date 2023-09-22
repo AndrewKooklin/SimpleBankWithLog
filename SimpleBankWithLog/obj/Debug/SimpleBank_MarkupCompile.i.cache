@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\repos\SimpleBankWithLog\SimpleBankWithLog\App.xaml
-81470986938
+7149535811
 6625223939
-45-1687687917
+44-548374011
 57-786503714
-MainWindow.xaml;View\AccountActionView.xaml;View\PersonView.xaml;View\RecordActionsWindow.xaml;View\RecordOperationsWindow.xaml;View\RegistrationWindow.xaml;View\TransactionBetweenClientsView.xaml;View\TransactionWithSelfView.xaml;
+MainWindow.xaml;View\AccountActionView.xaml;View\PersonView.xaml;View\RecordOperationsWindow.xaml;View\RegistrationWindow.xaml;View\TransactionBetweenClientsView.xaml;View\TransactionWithSelfView.xaml;
 
-True
+False
 

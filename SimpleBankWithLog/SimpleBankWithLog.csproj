@@ -228,9 +228,6 @@
     <Compile Include="View\PersonView.xaml.cs">
       <DependentUpon>PersonView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\RecordActionsWindow.xaml.cs">
-      <DependentUpon>RecordActionsWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\RecordOperationsWindow.xaml.cs">
       <DependentUpon>RecordOperationsWindow.xaml</DependentUpon>
     </Compile>
@@ -266,10 +263,6 @@
     <Page Include="View\PersonView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\RecordActionsWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\RecordOperationsWindow.xaml">
       <SubType>Designer</SubType>

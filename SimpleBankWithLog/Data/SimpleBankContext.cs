@@ -19,7 +19,7 @@ namespace SimpleBank.Data
 
         public DbSet<UserOperation> UserOperations { get; set; }
 
-        public SimpleBankContext() : base("SimpleBankConnectionSQLite")
+        public SimpleBankContext() : base("SimpleBankWithLogConnectionSQLite")
         {
 
         }

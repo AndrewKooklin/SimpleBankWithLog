@@ -103,7 +103,5 @@ C:\repos\SimpleBankWithLog\SimpleBankWithLog\obj\Debug\SimpleBank.exe
 C:\repos\SimpleBankWithLog\SimpleBankWithLog\obj\Debug\SimpleBank.pdb
 C:\repos\SimpleBankWithLog\SimpleBankWithLog\obj\Debug\View\RegistrationWindow.g.cs
 C:\repos\SimpleBankWithLog\SimpleBankWithLog\obj\Debug\View\RegistrationWindow.baml
-C:\repos\SimpleBankWithLog\SimpleBankWithLog\obj\Debug\View\RecordActionsWindow.g.cs
-C:\repos\SimpleBankWithLog\SimpleBankWithLog\obj\Debug\View\RecordActionsWindow.baml
 C:\repos\SimpleBankWithLog\SimpleBankWithLog\obj\Debug\View\RecordOperationsWindow.g.cs
 C:\repos\SimpleBankWithLog\SimpleBankWithLog\obj\Debug\View\RecordOperationsWindow.baml

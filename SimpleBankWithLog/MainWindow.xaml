@@ -75,7 +75,7 @@
                           CommandParameter="{Binding Header, ElementName=miCloseAccount}">
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="Перевод">
+            <MenuItem x:Name="menuItem1" Header="Перевод">
                 <MenuItem x:Name="miBetweenSelf"
                           Header="Между своими счетами"
                           Command="{Binding UpdateViewCommand}" 
@@ -84,7 +84,7 @@
                 <MenuItem x:Name="miBetweenClients"
                           Header="Между клиентами"
                           Command="{Binding UpdateViewCommand}" 
-                          CommandParameter="{Binding ElementName=window, Mode=OneWay}">
+                          CommandParameter="{Binding Header, ElementName=miBetweenClients}">
                 </MenuItem>
             </MenuItem>
             <MenuItem x:Name="miListActions"

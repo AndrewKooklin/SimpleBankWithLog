@@ -4,11 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimpleBank.View"
+        xmlns:viewModel="clr-namespace:SimpleBank.ViewModel"
         mc:Ignorable="d"
-        Title="RecordActions" 
+        Title="RecordOperations" 
         Height="450" 
         Width="800"
         Background="#FFCCF6EE">
+
+    <Window.Resources>
+        
+    </Window.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -17,10 +23,13 @@
             <ColumnDefinition Width="*" MinWidth="600"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
+        <Grid.Resources>
+        
+        </Grid.Resources>
+
         <Grid Grid.Row="1" 
               Grid.Column="0">
-            <Grid.Resources>
-            </Grid.Resources>
+            
             <Grid.RowDefinitions>
                 <RowDefinition Height="10*"/>
                 <RowDefinition Height="100*"/>
@@ -32,13 +41,13 @@
                     Margin="10,10,0.2,0.2">
                 <Label  x:Name="lRole"
                         Content="Role" 
-                        Width="111"
+                        Width="110"
                         Margin="0"
                         HorizontalContentAlignment="Center"
                         Background="DarkGray"/>
                 <Label  x:Name="lDataOperation"
                         Content="DataOperation" 
-                        Width="150"
+                        Width="130"
                         Margin="3 0 0 0"
                         HorizontalContentAlignment="Center"
                         Background="DarkGray"/>
@@ -68,7 +77,7 @@
                         HorizontalAlignment="Left" 
                         VerticalAlignment="Top">
                     <ListBox x:Name="lbPersonsItems"
-                         ItemsSource="{Binding UserOperations, UpdateSourceTrigger=PropertyChanged}"
+                         ItemsSource="{Binding UserOperations}"
                          HorizontalAlignment="Stretch"
                          VerticalAlignment="Stretch"
                          Margin="0" 
@@ -83,20 +92,24 @@
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock x:Name="tbRole" 
                                                Text="{Binding Role}"
-                                               Width="111"
-                                               Margin="0 0 0 0"/>
+                                               Width="110"
+                                               Margin="0"
+                                               Padding="2 0 0 0"/>
                                         <TextBlock x:Name="tbDataOperation" 
                                                Text="{Binding DataOperation}"
-                                               Width="109"
-                                               Margin="3 0 0 0"/>
+                                               Width="130"
+                                               Margin="0"
+                                               Padding="2 0 0 0"/>
                                         <TextBlock x:Name="tbOperation" 
                                                Text="{Binding Operation}"
-                                               Width="109"
-                                               Margin="3 0 0 0"/>
+                                               Width="330"
+                                               Margin="0"
+                                               Padding="2 0 0 0"/>
                                         <TextBlock x:Name="tbSum" 
                                                Text="{Binding Sum}" 
-                                               Width="106"
-                                               Margin="3 0 0 0"/>
+                                               Width="75"
+                                               Margin="0"
+                                               Padding="2 0 0 0"/>
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>

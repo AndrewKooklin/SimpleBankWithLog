@@ -35,7 +35,6 @@ namespace SimpleBank.Commands
         string totalAccountFrom = "";
         string totalAccountTo = "";
         string stringQuery = "";
-        string connecionString = @"Data Source=C:\repos\SimpleBank\SimpleBank\Data\SimpleBank.db;New=False;Compress=True;";
         SQLiteCommand SqliteCmd = new SQLiteCommand();
 
         public TransactionBetweenClientsCommand(ObservableCollection<Person> persons)
@@ -160,7 +159,7 @@ namespace SimpleBank.Commands
 
                 try
                 {
-                    SQLiteConnection connection = new SQLiteConnection(connecionString);
+                    SQLiteConnection connection = new SQLiteConnection(App.connectionString);
                     connection.Open();
 
                     stringQuery = "SELECT " + totalAccountFrom + " FROM Persons WHERE PersonId=" + accountIdFrom + "";
@@ -189,7 +188,7 @@ namespace SimpleBank.Commands
 
                 try
                 {
-                    SQLiteConnection connection = new SQLiteConnection(connecionString);
+                    SQLiteConnection connection = new SQLiteConnection(App.connectionString);
                     connection.Open();
                     SqliteCmd.Connection = connection;
 

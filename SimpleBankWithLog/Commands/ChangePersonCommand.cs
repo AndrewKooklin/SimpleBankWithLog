@@ -20,10 +20,15 @@ namespace SimpleBank.Commands
     public class ChangePersonCommand : ICommand
     {
         private SimpleBankContext _db;
-        private readonly MainWindowViewModel _mainWindowViewModel;
+        private MainWindowViewModel _mainWindowViewModel;
         private MainWindow _mainWindow;
-        private ObservableCollection<Person> _persons;
+        private ObservableCollection<Person> _persons = new ObservableCollection<Person>();
         private int _selectedIndexPerson;
+
+        public event Action<string, string, int?> RecordOperation;
+        public event Action RefreshListOperations;
+        private RecordOperation recordOperation = new RecordOperation();
+        private RefreshData refreshData = new RefreshData();
 
         public ChangePersonCommand(SimpleBankContext simpleBankContext,
                                     ObservableCollection<Person> persons,
@@ -34,6 +39,8 @@ namespace SimpleBank.Commands
             _persons = persons;
             _mainWindowViewModel = mainWindowViewModel;
             _mainWindow = mainWindow;
+            RecordOperation += recordOperation.RecordOperationToBD;
+            RefreshListOperations += refreshData.RefreshDataToUserOptionsWindow;
         }
 
         public ChangePersonCommand(int selectedIndexPerson)
@@ -133,10 +140,6 @@ namespace SimpleBank.Commands
                             return;
                         }
 
-                        personSelected.LastName = person.LastName;
-                        personSelected.FirstName = person.FirstName;
-                        personSelected.FathersName = person.FathersName;
-
                         CheckParse checkParse = new CheckParse();
                         if (!checkParse.CheckParsePhone(textBoxPhone.Text))
                         {
@@ -149,23 +152,37 @@ namespace SimpleBank.Commands
                             return;
                         }
 
-                        personSelected.Phone = person.Phone;
-                        personSelected.PassportNumber = person.PassportNumber;
-
-                        _db.SaveChanges();
-
-                        bool selectedIndex = Int32.TryParse(textBoxSelectedIndexPerson.Text, out _selectedIndexPerson);
-
-                        if (selectedIndex)
+                        if(personSelected.LastName != person.LastName ||
+                           personSelected.FirstName != person.FirstName ||
+                           personSelected.FathersName != person.FathersName ||
+                           personSelected.Phone != person.Phone ||
+                           personSelected.PassportNumber != person.PassportNumber)
                         {
-                             _persons.RemoveAt(_selectedIndexPerson);
-                            _persons.Insert(_selectedIndexPerson, personSelected);
-                        }
-                        
-                        App.mainWindow.lbPersonsItems.ItemsSource = _persons;
-                        App.mainWindow.lbPersonsItems.Items.Refresh();
-                    }
-                    
+                            personSelected.LastName = person.LastName;
+                            personSelected.FirstName = person.FirstName;
+                            personSelected.FathersName = person.FathersName;
+                            personSelected.Phone = person.Phone;
+                            personSelected.PassportNumber = person.PassportNumber;
+
+                            _db.SaveChanges();
+
+                            refreshData.RefreshDataPersons();
+
+                            string firstLetterFirstName = personSelected.FirstName
+                                                                        .ToUpper()
+                                                                        .Substring(0, 1);
+                            string firstLetterFathersName = personSelected.FathersName
+                                                                          .ToUpper()
+                                                                          .Substring(0, 1);
+
+                            string info = $"Изменение данных клиента: {personSelected.LastName} " +
+                                                                        firstLetterFirstName + "." +
+                                                                        firstLetterFathersName + ".";
+
+                            RecordOperation?.Invoke(App.mainWindow.Title, info, null);
+                            RefreshListOperations?.Invoke();
+                        } 
+                    }   
                 }
                 catch (Exception ex)
                 {

@@ -37,22 +37,22 @@ namespace SimpleBank.View
         {
             if (SelectUser.SelectedIndex == 0 || SelectUser.SelectedIndex == 1)
             {
-                mainWindow = new MainWindow();
+                App.mainWindow = new MainWindow();
 
                 _mainWindowViewModel = new MainWindowViewModel();
 
                 personViewModel = new PersonViewModel(_mainWindowViewModel);
 
-                mainWindow.DataContext = _mainWindowViewModel;
+                App.mainWindow.DataContext = _mainWindowViewModel;
 
                 this.Hide();
 
                 var selectedUser = (ComboBoxItem)SelectUser.SelectedValue;
-                string title = selectedUser.Content.ToString();
+                string role = selectedUser.Content.ToString();
 
-                mainWindow.Title = App.ResourceAssembly.GetName().Name.ToString() + " User: " + title;
+                App.mainWindow.Title = role;
 
-                mainWindow.Show();
+                App.mainWindow.Show();
             }
             else
             {

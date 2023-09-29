@@ -1,9 +1,11 @@
 ﻿using SimpleBank.Data;
 using SimpleBank.Model;
 using SimpleBank.View;
+using SimpleBank.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +15,8 @@ namespace SimpleBank.Commands
 {
     public class OpenListOperationsCommand : ICommand
     {
-        private RecordOperationsWindow recordOperationsWindow;
+        //private RecordOperationsWindow recordOperationsWindow;
+        private RecordOperationsWindowViewModel recordOperationsWindowViewModel;
         private SimpleBankContext _db;
 
         public OpenListOperationsCommand(SimpleBankContext db)
@@ -30,33 +33,10 @@ namespace SimpleBank.Commands
 
         public void Execute(object parameter)
         {
-            recordOperationsWindow = new RecordOperationsWindow();
+            App.recordOperationsWindow = new RecordOperationsWindow();
+            recordOperationsWindowViewModel = new RecordOperationsWindowViewModel();
 
-            recordOperationsWindow.lbPersonsItems.ItemsSource = GEtAllOperations(_db);
-
-            recordOperationsWindow.Show();
-        }
-
-        private ObservableCollection<UserOperation> GEtAllOperations(SimpleBankContext db)
-        {
-            ObservableCollection<UserOperation> _operations = new ObservableCollection<UserOperation>();
-
-            try
-            {
-                using (db = new SimpleBankContext())
-                {
-                    foreach (var operation in db.UserOperations.AsEnumerable())
-                    {
-                        _operations.Add(operation);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            return _operations;
+            App.recordOperationsWindow.Show();
         }
     }
 }

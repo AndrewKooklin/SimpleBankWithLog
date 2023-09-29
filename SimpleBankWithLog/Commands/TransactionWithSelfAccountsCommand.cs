@@ -25,7 +25,6 @@ namespace SimpleBank.Commands
         bool convertTotalSalary;
         bool convertTotalDeposit;
         string stringQuery = "";
-        string connecionString = @"Data Source=C:\repos\SimpleBank\SimpleBank\Data\SimpleBank.db;New=False;Compress=True;";
         SQLiteCommand SqliteCmd = new SQLiteCommand();
 
         public TransactionWithSelfAccountsCommand(ObservableCollection<Person> persons)
@@ -108,7 +107,7 @@ namespace SimpleBank.Commands
 
                 try
                 {
-                    SQLiteConnection connection = new SQLiteConnection(connecionString);
+                    SQLiteConnection connection = new SQLiteConnection(App.connectionString);
                     connection.Open();
                     
                     stringQuery = "SELECT TotalSalaryAccount FROM Persons WHERE PersonId=" + accountId + "";
@@ -137,7 +136,7 @@ namespace SimpleBank.Commands
                     case "Зарплатный":
                         try
                         {
-                            SQLiteConnection connection = new SQLiteConnection(connecionString);
+                            SQLiteConnection connection = new SQLiteConnection(App.connectionString);
                             connection.Open();
                             SqliteCmd.Connection = connection;
 
@@ -190,7 +189,7 @@ namespace SimpleBank.Commands
                     case "Депозитный":
                         try
                         {
-                            SQLiteConnection connection = new SQLiteConnection(connecionString);
+                            SQLiteConnection connection = new SQLiteConnection(App.connectionString);
                             connection.Open();
                             SqliteCmd.Connection = connection;
 

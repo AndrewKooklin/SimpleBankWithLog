@@ -17,6 +17,8 @@ namespace SimpleBank
         public static PersonViewModel personViewModel;
         public static MainWindow mainWindow;
         public static RegistrationWindow registrationWindow;
+        public static RecordOperationsWindow recordOperationsWindow;
+        public static string connectionString = @"Data Source=C:\repos\SimpleBankWithLog\SimpleBankWithLog\Data\SimpleBank.db;New=False;Compress=True;";
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -30,6 +32,8 @@ namespace SimpleBank
             }
 
             registrationWindow = new RegistrationWindow();
+            recordOperationsWindow = new RecordOperationsWindow();
+            
             registrationWindow.Show();
 
             base.OnStartup(e);

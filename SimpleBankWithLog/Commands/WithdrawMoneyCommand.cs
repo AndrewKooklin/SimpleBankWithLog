@@ -82,8 +82,7 @@ namespace SimpleBank.Commands
                                 errorMessage.MessageShow("Откройте счет и внесите сумму");
                                 return;
                             }
-                            string connecionString = @"Data Source=C:\repos\SimpleBank\SimpleBank\Data\SimpleBank.db;New=False;Compress=True;";
-                            SQLiteConnection connection = new SQLiteConnection(connecionString);
+                            SQLiteConnection connection = new SQLiteConnection(App.connectionString);
                             connection.Open();
                             string stringQuery = "";
 
@@ -147,8 +146,7 @@ namespace SimpleBank.Commands
                                 errorMessage.MessageShow("Откройте счет и внесите сумму");
                                 return;
                             }
-                            string connecionString = @"Data Source=C:\repos\SimpleBank\SimpleBank\Data\SimpleBank.db;New=False;Compress=True;";
-                            SQLiteConnection connection = new SQLiteConnection(connecionString);
+                            SQLiteConnection connection = new SQLiteConnection(App.connectionString);
                             connection.Open();
                             string stringQuery = "";
                             

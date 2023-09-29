@@ -21,10 +21,17 @@ namespace SimpleBank.Commands
         ObservableCollection<Person> _persons;
         Person person = new Person();
         private string AccountType = "";
+        public event Action<string, string, int?> RecordOperation;
+        public event Action RefreshListOperations;
+        private RecordOperation recordOperation = new RecordOperation();
+        private RefreshData refreshData = new RefreshData();
+        private string AccountName = "";
 
         public CloseAccountCommand(ObservableCollection<Person> persons)
         {
             _persons = persons;
+            RecordOperation += recordOperation.RecordOperationToBD;
+            RefreshListOperations += refreshData.RefreshDataToUserOptionsWindow;
         }
 
         ErrorMessage errorMessage = new ErrorMessage();
@@ -58,17 +65,18 @@ namespace SimpleBank.Commands
                 }
                 if (choose.Content.Equals("Зарплатный"))
                 {
+                    AccountName = "Зарплатный";
                     AccountType = "TotalSalaryAccount";
                 }
                 else if (choose.Content.Equals("Депозитный"))
                 {
+                    AccountName = "Депозитный";
                     AccountType = "TotalDepositAccount";
                 }
 
                 try
                 {
-                    string connecionString = @"Data Source=C:\repos\SimpleBank\SimpleBank\Data\SimpleBank.db;New=False;Compress=True;";
-                    SQLiteConnection connection = new SQLiteConnection(connecionString);
+                    SQLiteConnection connection = new SQLiteConnection(App.connectionString);
                     connection.Open();
                     string stringQuery = "";
                     bool checkId = Int32.TryParse(textBlockAccountId.Text, out int AccountId);
@@ -102,19 +110,46 @@ namespace SimpleBank.Commands
                     
                     connection.Close();
 
+                    
+
                     person = _persons.Single(p => p.PersonId == AccountId);
+
+                    string firstLetterFirstName = person.FirstName.ToUpper()
+                                                                  .Substring(0, 1);
+                    string firstLetterFathersName = person.FathersName.ToUpper()
+                                                                      .Substring(0, 1);
+
+                    string info = "Закрытие счета : " + "\"" + choose.Content.ToString() + "\" клиента : "
+                                    + person.LastName + " " + firstLetterFirstName + "."
+                                    + firstLetterFathersName + ".";
+
+                    if (choose.Content.Equals("Зарплатный") && person.TotalSalaryAccount == null)
+                    {
+                        errorMessage.MessageShow(AccountName + " счет не открыт");
+                        return;
+                    }
+                    if (choose.Content.Equals("Депозитный") && person.TotalDepositAccount == null)
+                    {
+                        errorMessage.MessageShow(AccountName + " счет не открыт");
+                        return;
+                    }
+
                     if (choose.Content.Equals("Зарплатный") && person.TotalSalaryAccount == 0)
                     {
                         person.TotalSalaryAccount = null;
+                        RecordOperation?.Invoke(App.mainWindow.Title, info, null);
+                        refreshData.RefreshDataPersons();
                     }
                     if(choose.Content.Equals("Депозитный") && person.TotalDepositAccount == 0)
                     {
                         person.TotalDepositAccount = null;
+                        RecordOperation?.Invoke(App.mainWindow.Title, info, null);
+                        refreshData.RefreshDataPersons();
                     }
-                    AccountType = "";
 
-                    App.mainWindow.lbPersonsItems.ItemsSource = _persons;
-                    App.mainWindow.lbPersonsItems.Items.Refresh();
+                    RefreshListOperations?.Invoke();
+
+                    AccountType = "";
                 }
                 catch (Exception ex)
                 {

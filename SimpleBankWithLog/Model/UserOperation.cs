@@ -21,20 +21,19 @@ namespace SimpleBank.Model
 
         private string operation;
 
-        private int sum;
+        private int? totalSum;
 
         public UserOperation()
         {
         }
 
-        public UserOperation(int operationId, string role, string dataOperation, 
-                             string operation, int sum)
+        public UserOperation(string role, string dataOperation, 
+                             string operation, int? totalSum)
         {
-            this.operationId = operationId;
             this.role = role;
             this.dataOperation = dataOperation;
             this.operation = operation;
-            this.sum = sum;
+            this.totalSum = totalSum;
         }
 
         [Key, Autoincrement]
@@ -86,13 +85,13 @@ namespace SimpleBank.Model
         }
 
         [Column("Sum")]
-        public int Sum
+        public int? TotalSum
         {
-            get { return sum; }
+            get { return totalSum; }
             set
             {
-                sum = value;
-                OnPropertyChanged(nameof(Sum));
+                totalSum = value;
+                OnPropertyChanged(nameof(TotalSum));
             }
         }
     }

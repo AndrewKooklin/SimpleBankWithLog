@@ -212,6 +212,9 @@
     <Compile Include="Commands\TransactionBetweenClientsCommand.cs" />
     <Compile Include="Commands\TransactionWithSelfAccountsCommand.cs" />
     <Compile Include="Commands\WithdrawMoneyCommand.cs" />
+    <Compile Include="Help\GetDataFromDB.cs" />
+    <Compile Include="Help\RecordOperation.cs" />
+    <Compile Include="Help\RefreshData.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -221,6 +224,7 @@
     <Compile Include="Model\UserOperation.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\PersonViewModel.cs" />
+    <Compile Include="ViewModel\RecordOperationsWindowViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\AccountActionView.xaml.cs">
       <DependentUpon>AccountActionView.xaml</DependentUpon>

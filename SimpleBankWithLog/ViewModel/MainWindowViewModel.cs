@@ -29,9 +29,9 @@ namespace SimpleBank.ViewModel
         private MainWindow _mainWindow;
         private Person _selectedPerson;
         private int _selectedCount = 0;
-
         private ObservableCollection<Person> _persons;
         private ObservableCollection<UserOperation> _userOperations;
+        private GetDataFromDB getDataFromDB = new GetDataFromDB();
 
         public ObservableCollection<Person> Persons
         {
@@ -132,6 +132,7 @@ namespace SimpleBank.ViewModel
                     SelectedIndexPerson = App.mainWindow.lbPersonsItems.SelectedIndex;
 
                     var view = (PersonView)RightCurrentView;
+                    //SelectedIndexPerson = _selectedPerson.PersonId;
                     view.tbSelectedIndexPerson.Text = SelectedIndexPerson.ToString();
                     view.tbPersonId.Text = _selectedPerson.PersonId.ToString();
                     view.tbLastName.Text = _selectedPerson.LastName;
@@ -241,7 +242,7 @@ namespace SimpleBank.ViewModel
 
             Persons = new ObservableCollection<Person>();
 
-            Persons = GEtAllPersons(_db);
+            Persons = getDataFromDB.GEtAllPersonsFromDB();
 
             CreatePersonCommand = new CreatePersonCommand(_db,
                                                           Persons,
@@ -284,6 +285,7 @@ namespace SimpleBank.ViewModel
 
             try
             {
+                
                 using (db = new SimpleBankContext())
                 {
                     foreach (var person in db.Persons.AsEnumerable())

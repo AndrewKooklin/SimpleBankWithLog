@@ -72,8 +72,7 @@ namespace SimpleBank.Commands
                                 errorMessage.MessageShow("Зарплатный счет уже открыт");
                                 return;
                             }
-                            string connecionString = @"Data Source=C:\repos\SimpleBank\SimpleBank\Data\SimpleBank.db;New=False;Compress=True;";
-                            SQLiteConnection connection = new SQLiteConnection(connecionString);
+                            SQLiteConnection connection = new SQLiteConnection(App.connectionString);
                             connection.Open();
                             string stringQuery = "";
                             //bool checkId = Int32.TryParse(textBlockAccountId.Text, out int salaryAccountId);
@@ -118,8 +117,7 @@ namespace SimpleBank.Commands
                                 errorMessage.MessageShow("Депозитный счет уже открыт");
                                 return;
                             }
-                            string connecionString = @"Data Source=C:\repos\SimpleBank\SimpleBank\Data\SimpleBank.db;New=False;Compress=True;";
-                            SQLiteConnection connection = new SQLiteConnection(connecionString);
+                            SQLiteConnection connection = new SQLiteConnection(App.connectionString);
                             connection.Open();
                             string stringQuery = "";
                             //bool checkId = Int32.TryParse(textBlockAccountId.Text, out int depositAccountId);

@@ -3,16 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SimpleBank.View"
+        xmlns:view="clr-namespace:SimpleBank.View"
         xmlns:viewModel="clr-namespace:SimpleBank.ViewModel"
         mc:Ignorable="d"
         Title="RecordOperations" 
         Height="450" 
-        Width="800"
+        Width="961"
         Background="#FFCCF6EE">
 
     <Window.Resources>
-        
+        <viewModel:RecordOperationsWindowViewModel x:Key="RecordOperationsWindowViewModel">
+        </viewModel:RecordOperationsWindowViewModel>
+        <view:RecordOperationsWindow x:Key="RecordOperationsWindow"/>
     </Window.Resources>
     
     <Grid>
@@ -53,7 +55,7 @@
                         Background="DarkGray"/>
                 <Label  x:Name="lOperation"
                         Content="Operation" 
-                        Width="330"
+                        Width="600"
                         Margin="3 0 0 0"
                         HorizontalContentAlignment="Center"
                         Background="DarkGray"/>
@@ -76,8 +78,8 @@
                         Margin="10 0 0 0" 
                         HorizontalAlignment="Left" 
                         VerticalAlignment="Top">
-                    <ListBox x:Name="lbPersonsItems"
-                         ItemsSource="{Binding UserOperations}"
+                    <ListBox x:Name="lbOperations"
+                         ItemsSource="{Binding Operations, Source={StaticResource RecordOperationsWindowViewModel}}"
                          HorizontalAlignment="Stretch"
                          VerticalAlignment="Stretch"
                          Margin="0" 
@@ -102,7 +104,7 @@
                                                Padding="2 0 0 0"/>
                                         <TextBlock x:Name="tbOperation" 
                                                Text="{Binding Operation}"
-                                               Width="330"
+                                               Width="600"
                                                Margin="0"
                                                Padding="2 0 0 0"/>
                                         <TextBlock x:Name="tbSum" 

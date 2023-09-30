@@ -44,7 +44,7 @@ namespace SimpleBank.Help
         {
             userOperations = new ObservableCollection<UserOperation>();
 
-            int totalSum;
+            int? totalSum;
 
             try
             {
@@ -63,7 +63,11 @@ namespace SimpleBank.Help
                     object dataOperation = dataReader["DataOperation"];
                     object operation = dataReader["Operation"];
                     object totalSumRead = dataReader["TotalSum"];
-                    totalSum = System.Int32.Parse(totalSumRead.ToString());
+                    if(totalSumRead.ToString().Equals("0") || totalSumRead == null)
+                    {
+                        totalSum = null;
+                    }
+                    else totalSum = System.Int32.Parse(totalSumRead.ToString());
 
                     UserOperation userOperation = new UserOperation(role.ToString(), dataOperation.ToString(),
                                                                     operation.ToString(), totalSum);

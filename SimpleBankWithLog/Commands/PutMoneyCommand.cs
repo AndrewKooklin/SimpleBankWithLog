@@ -23,10 +23,14 @@ namespace SimpleBank.Commands
         private DepositAccount depositAccount;
         Person person = new Person();
         private Account account = new Account();
+        public event Action<string, string, int?> RecordOperation;
+        public event Action RefreshListOperations;
 
         public PutMoneyCommand(ObservableCollection<Person> persons)
         {
             _persons = persons;
+            RecordOperation += App.recordOperation.RecordOperationToBD;
+            RefreshListOperations += App.refreshData.RefreshDataToUserOptionsWindow;
         }
 
         ErrorMessage errorMessage = new ErrorMessage();
@@ -72,7 +76,7 @@ namespace SimpleBank.Commands
                 bool parseTextBoxInputNumber = Int32.TryParse(textBoxInputNumber.Text, out int inputNumber);
                 if (!parseTextBoxInputNumber)
                 {
-                    errorMessage.MessageShow("Введите число не более 2000000000");
+                    errorMessage.MessageShow("Введите положительное число не более 2000000000");
                     return;
                 }
 
@@ -125,9 +129,15 @@ namespace SimpleBank.Commands
                                 SqliteCmd.CommandText = stringQuery;
                                 SqliteCmd.ExecuteNonQuery();
                                 connection.Close();
+
+                                string info = "Внесение денег на зарплатный счет клиента : "
+                                            + App.abbreviatedName.GetFIO(person);
+
+                                RecordOperation?.Invoke(App.mainWindow.Title, info, inputNumber);
+                                App.refreshData.RefreshDataPersons();
+                                RefreshListOperations?.Invoke();
                             }
 
-                            //person = _persons.Single(p => p.PersonId == accountId);
                             if (person.TotalSalaryAccount != null && account.Total < 2100000000 && account.Total > 0)
                             {
                                 person.TotalSalaryAccount = account.Total;
@@ -137,9 +147,6 @@ namespace SimpleBank.Commands
                                 errorMessage.MessageShow("Максимальная сумма на счете 2100000000");
                                 return;
                             }
-
-                            App.mainWindow.lbPersonsItems.ItemsSource = _persons;
-                            App.mainWindow.lbPersonsItems.Items.Refresh();
                         }
                         catch (Exception ex)
                         {
@@ -193,9 +200,15 @@ namespace SimpleBank.Commands
                                 SqliteCmd.CommandText = stringQuery;
                                 SqliteCmd.ExecuteNonQuery();
                                 connection.Close();
+
+                                string info = "Внесение денег на депозитный счет клиента : "
+                                            + App.abbreviatedName.GetFIO(person);
+
+                                RecordOperation?.Invoke(App.mainWindow.Title, info, inputNumber);
+                                App.refreshData.RefreshDataPersons();
+                                RefreshListOperations?.Invoke();
                             }
 
-                            //person = _persons.Single(p => p.PersonId == depositAccountId);
                             if (person.TotalDepositAccount != null && 
                                 account.Total < 2100000000 && 
                                 account.Total > 0)
@@ -207,9 +220,6 @@ namespace SimpleBank.Commands
                                 errorMessage.MessageShow("Максимальная сумма на счете 2100000000");
                                 return;
                             }
-
-                            App.mainWindow.lbPersonsItems.ItemsSource = _persons;
-                            App.mainWindow.lbPersonsItems.Items.Refresh();
                         }
                         catch (Exception ex)
                         {

@@ -74,6 +74,16 @@
                           Command="{Binding UpdateViewCommand}" 
                           CommandParameter="{Binding Header, ElementName=miCloseAccount}">
                 </MenuItem>
+                <MenuItem x:Name="miPutMoney"
+                          Header="Внести сумму"
+                          Command="{Binding UpdateViewCommand}" 
+                          CommandParameter="{Binding Header, ElementName=miPutMoney}">
+                </MenuItem>
+                <MenuItem x:Name="miWithdrawMoney"
+                          Header="Снять сумму"
+                          Command="{Binding UpdateViewCommand}" 
+                          CommandParameter="{Binding Header, ElementName=miWithdrawMoney}">
+                </MenuItem>
             </MenuItem>
             <MenuItem x:Name="menuItem1" Header="Перевод">
                 <MenuItem x:Name="miBetweenSelf"

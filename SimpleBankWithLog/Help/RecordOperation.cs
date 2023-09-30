@@ -27,7 +27,7 @@ namespace SimpleBank.Help
 
                 string dateTimeOperation = DateTime.Now.ToLocalTime().ToString();
 
-                string stringQuery =  $"INSERT INTO UserOperations(Role, DataOperation, Operation, TotalSum) VALUES ('{role}', '{dateTimeOperation}', '{operation}', '{totalSum}')";
+                string stringQuery =  $"INSERT INTO UserOperations(Role, DataOperation, Operation, TotalSum) VALUES ('{role}', '{dateTimeOperation}', '{operation}', {totalSum})";
 
                 SqliteCmd.Connection = connection;
                 SqliteCmd.CommandText = stringQuery;

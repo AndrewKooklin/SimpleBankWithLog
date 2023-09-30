@@ -108,7 +108,7 @@
                                                Margin="0"
                                                Padding="2 0 0 0"/>
                                         <TextBlock x:Name="tbSum" 
-                                               Text="{Binding Sum}" 
+                                               Text="{Binding TotalSum}" 
                                                Width="75"
                                                Margin="0"
                                                Padding="2 0 0 0"/>

@@ -3,19 +3,12 @@ using SimpleBank.Model;
 using SimpleBank.View;
 using SimpleBank.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace SimpleBank.Commands
 {
     public class OpenListOperationsCommand : ICommand
     {
-        //private RecordOperationsWindow recordOperationsWindow;
         private RecordOperationsWindowViewModel recordOperationsWindowViewModel;
         private SimpleBankContext _db;
 
@@ -35,7 +28,6 @@ namespace SimpleBank.Commands
         {
             App.recordOperationsWindow = new RecordOperationsWindow();
             recordOperationsWindowViewModel = new RecordOperationsWindowViewModel();
-
             App.recordOperationsWindow.Show();
         }
     }

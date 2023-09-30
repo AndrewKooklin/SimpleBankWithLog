@@ -87,7 +87,14 @@ namespace SimpleBank.Model
         [Column("Sum")]
         public int? TotalSum
         {
-            get { return totalSum; }
+            get 
+            { 
+                if(totalSum == null)
+                {
+                    return null;
+                }
+                else return totalSum; 
+            }
             set
             {
                 totalSum = value;

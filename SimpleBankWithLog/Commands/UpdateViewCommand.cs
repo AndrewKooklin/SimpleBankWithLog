@@ -56,6 +56,8 @@ namespace SimpleBank.Commands
                     break;
                 case "Открыть":
                 case "Закрыть":
+                case "Внести сумму":
+                case "Снять сумму":
                     _mainWindowViewModel.RightCurrentView = new AccountActionView();
                     break;
                 case "Между своими счетами":

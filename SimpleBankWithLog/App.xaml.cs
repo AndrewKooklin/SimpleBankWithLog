@@ -1,4 +1,5 @@
 ﻿using SimpleBank.Data;
+using SimpleBank.Help;
 using SimpleBank.Model;
 using SimpleBank.View;
 using SimpleBank.ViewModel;
@@ -19,6 +20,11 @@ namespace SimpleBank
         public static RegistrationWindow registrationWindow;
         public static RecordOperationsWindow recordOperationsWindow;
         public static string connectionString = @"Data Source=C:\repos\SimpleBankWithLog\SimpleBankWithLog\Data\SimpleBank.db;New=False;Compress=True;";
+        public static event Action<string, string, int?> RecordOperation;
+        public static event Action RefreshListOperations;
+        public static RecordOperation recordOperation = new RecordOperation();
+        public static RefreshData refreshData = new RefreshData();
+        public static GetAbbreviatedName abbreviatedName = new GetAbbreviatedName();
 
         protected override void OnStartup(StartupEventArgs e)
         {

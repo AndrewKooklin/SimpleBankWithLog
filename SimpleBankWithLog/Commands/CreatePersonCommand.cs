@@ -22,6 +22,8 @@ namespace SimpleBank.Command
         private readonly MainWindowViewModel _mainWindowViewModel;
         private MainWindow _mainWindow;
         private ObservableCollection<Person> _persons;
+        public event Action<string, string, int?> RecordOperation;
+        public event Action RefreshListOperations;
 
         public CreatePersonCommand(SimpleBankContext simpleBankContext,
                                     ObservableCollection<Person> persons,
@@ -32,6 +34,8 @@ namespace SimpleBank.Command
             _persons = persons;
             _mainWindowViewModel = mainWindowViewModel;
             _mainWindow = mainWindow;
+            RecordOperation += App.recordOperation.RecordOperationToBD;
+            RefreshListOperations += App.refreshData.RefreshDataToUserOptionsWindow;
         }
 
         public CreatePersonCommand()
@@ -125,10 +129,19 @@ namespace SimpleBank.Command
                         _persons.Add(person);
                         _db.Persons.Add(person);
                         _db.SaveChanges();
+
+                        string info = "Создание клиента : "
+                                    + App.abbreviatedName.GetFIO(person);
+
+                        RecordOperation?.Invoke(App.mainWindow.Title, info, null);
+                        App.refreshData.RefreshDataPersons();
+                        RefreshListOperations?.Invoke();
                     }
 
-                    App.mainWindow.lbPersonsItems.ItemsSource = _persons;
-                    App.mainWindow.lbPersonsItems.Items.Refresh();
+                    //App.mainWindow.lbPersonsItems.ItemsSource = _persons;
+                    //App.mainWindow.lbPersonsItems.Items.Refresh();
+
+
                 }
                 catch (Exception ex)
                 {

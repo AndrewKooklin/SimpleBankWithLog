@@ -5,10 +5,8 @@ using SimpleBank.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace SimpleBank.Commands
@@ -23,6 +21,8 @@ namespace SimpleBank.Commands
         private MainWindow _mainWindow;
         private ObservableCollection<Person> _persons;
         private int _selectedIndexPerson;
+        public event Action<string, string, int?> RecordOperation;
+        public event Action RefreshListOperations;
 
         public DeletePersonCommand(SimpleBankContext simpleBankContext,
                                     ObservableCollection<Person> persons,
@@ -33,6 +33,8 @@ namespace SimpleBank.Commands
             _persons = persons;
             _mainWindowViewModel = mainWindowViewModel;
             _mainWindow = mainWindow;
+            RecordOperation += App.recordOperation.RecordOperationToBD;
+            RefreshListOperations += App.refreshData.RefreshDataToUserOptionsWindow;
         }
 
         public DeletePersonCommand(int selectedIndexPerson)
@@ -59,8 +61,8 @@ namespace SimpleBank.Commands
                 var stackPanel = (StackPanel)parameter;
                 var childrenStackPanel = stackPanel.Children;
 
-                var textBoxSelectedIndexPerson = (TextBox)childrenStackPanel[1];
-                var textBoxPersonId = (TextBox)childrenStackPanel[2];
+                var textBoxSelectedIndexPerson = (System.Windows.Controls.TextBox)childrenStackPanel[1];
+                var textBoxPersonId = (System.Windows.Controls.TextBox)childrenStackPanel[2];
                 bool personId = Int32.TryParse(textBoxPersonId.Text, out int _personId);
                 if (personId)
                 {
@@ -77,21 +79,59 @@ namespace SimpleBank.Commands
                             errorMessage.MessageShow("Выберите клиента из списка");
                             return;
                         }
-
-                        _db.Persons.Remove(personSelected);
-                        _db.SaveChanges();
-
-                        bool selectedIndex = Int32.TryParse(textBoxSelectedIndexPerson.Text, out _selectedIndexPerson);
-
-                        if (selectedIndex)
+                        else if(personSelected != null)
                         {
-                            _persons.RemoveAt(_selectedIndexPerson);
+                            DialogResult dialogResult = errorMessage.MessageShowWithResult("При удалении " +
+                                "клиента удалятся все его счета." +
+                                "\nВы уверены что хотите удалить клиента?");
+
+                            if (dialogResult == DialogResult.No)
+                            {
+                                return;
+                            }
+                            else if (dialogResult == DialogResult.Yes)
+                            {
+                                personSelected.TotalSalaryAccount = null;
+                                personSelected.TotalDepositAccount = null;
+
+                                _db.Persons.Remove(personSelected);
+                                _db.SaveChanges();
+
+                                bool selectedIndex = Int32.TryParse(textBoxSelectedIndexPerson.Text, out _selectedIndexPerson);
+
+                                if (selectedIndex)
+                                {
+                                    _persons.RemoveAt(_selectedIndexPerson);
+
+                                    string info = "Удаление клиента : "
+                                            + App.abbreviatedName.GetFIO(personSelected);
+
+                                    RecordOperation?.Invoke(App.mainWindow.Title, info, null);
+                                    App.refreshData.RefreshDataPersons();
+                                    RefreshListOperations?.Invoke();
+                                }
+                            }
                         }
 
-                        App.mainWindow.lbPersonsItems.ItemsSource = _persons;
-                        App.mainWindow.lbPersonsItems.Items.Refresh();
-                    }
 
+                        //_db.Persons.Remove(personSelected);
+                        //_db.SaveChanges();
+
+                        //bool selectedIndex = Int32.TryParse(textBoxSelectedIndexPerson.Text, out _selectedIndexPerson);
+
+                        //if (selectedIndex)
+                        //{
+
+                        //    _persons.RemoveAt(_selectedIndexPerson);
+
+                        //    string info = "Удаление клиента : "
+                        //            + App.abbreviatedName.GetFIO(personSelected);
+
+                        //    RecordOperation?.Invoke(App.mainWindow.Title, info, null);
+                        //    App.refreshData.RefreshDataPersons();
+                        //    RefreshListOperations?.Invoke();
+                        //}
+                    }
                 }
                 catch (Exception ex)
                 {

@@ -27,8 +27,6 @@ namespace SimpleBank.Commands
 
         public event Action<string, string, int?> RecordOperation;
         public event Action RefreshListOperations;
-        private RecordOperation recordOperation = new RecordOperation();
-        private RefreshData refreshData = new RefreshData();
 
         public ChangePersonCommand(SimpleBankContext simpleBankContext,
                                     ObservableCollection<Person> persons,
@@ -39,8 +37,8 @@ namespace SimpleBank.Commands
             _persons = persons;
             _mainWindowViewModel = mainWindowViewModel;
             _mainWindow = mainWindow;
-            RecordOperation += recordOperation.RecordOperationToBD;
-            RefreshListOperations += refreshData.RefreshDataToUserOptionsWindow;
+            RecordOperation += App.recordOperation.RecordOperationToBD;
+            RefreshListOperations += App.refreshData.RefreshDataToUserOptionsWindow;
         }
 
         public ChangePersonCommand(int selectedIndexPerson)
@@ -166,18 +164,9 @@ namespace SimpleBank.Commands
 
                             _db.SaveChanges();
 
-                            refreshData.RefreshDataPersons();
+                            App.refreshData.RefreshDataPersons();
 
-                            string firstLetterFirstName = personSelected.FirstName
-                                                                        .ToUpper()
-                                                                        .Substring(0, 1);
-                            string firstLetterFathersName = personSelected.FathersName
-                                                                          .ToUpper()
-                                                                          .Substring(0, 1);
-
-                            string info = $"Изменение данных клиента: {personSelected.LastName} " +
-                                                                        firstLetterFirstName + "." +
-                                                                        firstLetterFathersName + ".";
+                            string info = $"Изменение данных клиента: " + App.abbreviatedName.GetFIO(personSelected);
 
                             RecordOperation?.Invoke(App.mainWindow.Title, info, null);
                             RefreshListOperations?.Invoke();

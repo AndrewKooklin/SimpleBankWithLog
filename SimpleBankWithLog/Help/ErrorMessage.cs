@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace SimpleBank.Help
 {
@@ -18,7 +19,16 @@ namespace SimpleBank.Help
 
         public void MessageShow(string text)
         {
-            MessageBox.Show(text, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            System.Windows.MessageBox.Show(text, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        public DialogResult MessageShowWithResult(string text)
+        {
+            DialogResult dialogResult = new DialogResult(); 
+
+            dialogResult = System.Windows.Forms.MessageBox.Show(text, "Подтвердите действие", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            return dialogResult;
         }
     }
 }

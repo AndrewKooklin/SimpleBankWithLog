@@ -21,10 +21,14 @@ namespace SimpleBank.Commands
     {
         ObservableCollection<Person> _persons;
         Person person = new Person();
+        public event Action<string, string, int?> RecordOperation;
+        public event Action RefreshListOperations;
 
         public OpenAccountCommand(ObservableCollection<Person> persons)
         {
             _persons = persons;
+            RecordOperation += App.recordOperation.RecordOperationToBD;
+            RefreshListOperations += App.refreshData.RefreshDataToUserOptionsWindow;
         }
 
         ErrorMessage errorMessage = new ErrorMessage();
@@ -98,10 +102,13 @@ namespace SimpleBank.Commands
                             SqliteCmd.ExecuteNonQuery();
                             connection.Close();
 
-                            person = _persons.Single(p => p.PersonId == accountId);
                             person.TotalSalaryAccount = 0;
-                            App.mainWindow.lbPersonsItems.ItemsSource = _persons;
-                            App.mainWindow.lbPersonsItems.Items.Refresh();
+
+                            string info = "Создание зарплатного счета клиента : " + App.abbreviatedName.GetFIO(person);
+
+                            RecordOperation?.Invoke(App.mainWindow.Title, info, null);
+                            App.refreshData.RefreshDataPersons();
+                            RefreshListOperations?.Invoke();
                         }
                         catch (Exception ex)
                         {
@@ -120,7 +127,6 @@ namespace SimpleBank.Commands
                             SQLiteConnection connection = new SQLiteConnection(App.connectionString);
                             connection.Open();
                             string stringQuery = "";
-                            //bool checkId = Int32.TryParse(textBlockAccountId.Text, out int depositAccountId);
                             if (checkId)
                             {
                                 stringQuery = "INSERT INTO DepositAccounts ('DepositAccountId' , 'DepositTotal' , 'DateDepositOpen') " +
@@ -143,11 +149,13 @@ namespace SimpleBank.Commands
                             SqliteCmd.ExecuteNonQuery();
                             connection.Close();
 
-                            person = _persons.Single(p => p.PersonId == accountId);
                             person.TotalDepositAccount = 0;
 
-                            App.mainWindow.lbPersonsItems.ItemsSource = _persons;
-                            App.mainWindow.lbPersonsItems.Items.Refresh();
+                            string info = "Создание депозитного счета клиента : " + App.abbreviatedName.GetFIO(person);
+
+                            RecordOperation?.Invoke(App.mainWindow.Title, info, null);
+                            App.refreshData.RefreshDataPersons();
+                            RefreshListOperations?.Invoke();
                         }
                         catch (Exception ex)
                         {

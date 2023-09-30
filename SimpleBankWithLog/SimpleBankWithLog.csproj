@@ -251,7 +251,6 @@
     <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\CreatePersonCommand.cs" />
     <Compile Include="Commands\DeletePersonCommand.cs" />
-    <Compile Include="Commands\GetClientsCommand.cs" />
     <Compile Include="Commands\UpdateViewCommand.cs" />
     <Compile Include="Data\Configuration.cs" />
     <Compile Include="Data\MyDbContextInitializer.cs" />

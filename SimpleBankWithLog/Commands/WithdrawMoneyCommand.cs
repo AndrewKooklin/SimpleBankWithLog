@@ -19,10 +19,14 @@ namespace SimpleBank.Commands
         ObservableCollection<Person> _persons;
         Person person = new Person();
         int newTotal;
+        private event Action<string, string, int?> RecordOperation;
+        private event Action RefreshListOperations;
 
         public WithdrawMoneyCommand(ObservableCollection<Person> persons)
         {
             _persons = persons;
+            RecordOperation += App.recordOperation.RecordOperationToBD;
+            RefreshListOperations += App.refreshData.RefreshDataToUserOptionsWindow;
         }
 
         ErrorMessage errorMessage = new ErrorMessage();
@@ -122,15 +126,19 @@ namespace SimpleBank.Commands
                                 SqliteCmd.ExecuteNonQuery();
                                 connection.Close();
                                 person.TotalSalaryAccount = newTotal;
+
+                                string info = "Снятие денег с зарплатного счета клиента : "
+                                            + App.abbreviatedName.GetFIO(person);
+
+                                RecordOperation?.Invoke(App.mainWindow.Title, info, inputNumber);
+                                App.refreshData.RefreshDataPersons();
+                                RefreshListOperations?.Invoke();
                             }
                             else
                             {
                                 errorMessage.MessageShow("Введенная сумма превышает остаток по счету");
                                 return;
                             }
-
-                            App.mainWindow.lbPersonsItems.ItemsSource = _persons;
-                            App.mainWindow.lbPersonsItems.Items.Refresh();
                         }
                         catch (Exception ex)
                         {
@@ -186,6 +194,13 @@ namespace SimpleBank.Commands
                                 SqliteCmd.ExecuteNonQuery();
                                 connection.Close();
                                 person.TotalDepositAccount = newTotal;
+
+                                string info = "Снятие денег с депозитного счета клиента : "
+                                            + App.abbreviatedName.GetFIO(person);
+
+                                RecordOperation?.Invoke(App.mainWindow.Title, info, inputNumber);
+                                App.refreshData.RefreshDataPersons();
+                                RefreshListOperations?.Invoke();
                             }
                             else
                             {

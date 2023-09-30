@@ -23,8 +23,8 @@ namespace SimpleBank.Commands
         private DepositAccount depositAccount;
         Person person = new Person();
         private Account account = new Account();
-        public event Action<string, string, int?> RecordOperation;
-        public event Action RefreshListOperations;
+        private event Action<string, string, int?> RecordOperation;
+        private event Action RefreshListOperations;
 
         public PutMoneyCommand(ObservableCollection<Person> persons)
         {

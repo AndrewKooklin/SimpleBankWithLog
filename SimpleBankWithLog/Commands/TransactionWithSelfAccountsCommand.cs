@@ -26,10 +26,14 @@ namespace SimpleBank.Commands
         bool convertTotalDeposit;
         string stringQuery = "";
         SQLiteCommand SqliteCmd = new SQLiteCommand();
+        private event Action<string, string, int?> RecordOperation;
+        private event Action RefreshListOperations;
 
         public TransactionWithSelfAccountsCommand(ObservableCollection<Person> persons)
         {
             _persons = persons;
+            RecordOperation += App.recordOperation.RecordOperationToBD;
+            RefreshListOperations += App.refreshData.RefreshDataToUserOptionsWindow;
         }
 
         ErrorMessage errorMessage = new ErrorMessage();
@@ -67,12 +71,12 @@ namespace SimpleBank.Commands
                 }
                 if (person.TotalSalaryAccount == null)
                 {
-                    errorMessage.MessageShow("Откройте зарплатный счет и внесите сумму");
+                    errorMessage.MessageShow("Откройте зарплатный счет");
                     return;
                 }
                 if (person.TotalDepositAccount == null)
                 {
-                    errorMessage.MessageShow("Откройте депозитный счет и внесите сумму");
+                    errorMessage.MessageShow("Откройте депозитный счет");
                     return;
                 }
 
@@ -176,9 +180,6 @@ namespace SimpleBank.Commands
                                 connection.Close();
                                 return;
                             }
-
-                            App.mainWindow.lbPersonsItems.ItemsSource = _persons;
-                            App.mainWindow.lbPersonsItems.Items.Refresh();
                         }
                         catch (Exception ex)
                         {
@@ -230,9 +231,6 @@ namespace SimpleBank.Commands
                                 connection.Close();
                                 return;
                             }
-
-                            App.mainWindow.lbPersonsItems.ItemsSource = _persons;
-                            App.mainWindow.lbPersonsItems.Items.Refresh();
                         }
                         catch (Exception ex)
                         {
@@ -244,6 +242,14 @@ namespace SimpleBank.Commands
                         errorMessage.MessageShow("Неопределенный тип счета");
                         break;
                 }
+
+                string info = "Перевод денег со счета " + "\"" + chooseAccountFrom.Content.ToString() + "\""
+                                          + " на счет " + "\"" + chooseAccountTo.Content.ToString() + "\""
+                                          + " \nклиента : " + App.abbreviatedName.GetFIO(person);
+
+                RecordOperation?.Invoke(App.mainWindow.Title, info, inputNumber);
+                App.refreshData.RefreshDataPersons();
+                RefreshListOperations?.Invoke();
             }
         }
     }

@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="RecordOperations" 
         Height="450" 
-        Width="961"
+        Width="775"
         Background="#FFCCF6EE">
 
     <Window.Resources>
@@ -55,7 +55,7 @@
                         Background="DarkGray"/>
                 <Label  x:Name="lOperation"
                         Content="Operation" 
-                        Width="600"
+                        Width="400"
                         Margin="3 0 0 0"
                         HorizontalContentAlignment="Center"
                         Background="DarkGray"/>
@@ -104,7 +104,7 @@
                                                Padding="2 0 0 0"/>
                                         <TextBlock x:Name="tbOperation" 
                                                Text="{Binding Operation}"
-                                               Width="600"
+                                               Width="400"
                                                Margin="0"
                                                Padding="2 0 0 0"/>
                                         <TextBlock x:Name="tbSum" 

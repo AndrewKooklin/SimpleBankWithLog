@@ -209,7 +209,6 @@
     <Compile Include="Commands\OpenAccountCommand.cs" />
     <Compile Include="Commands\OpenListOperationsCommand.cs" />
     <Compile Include="Commands\PutMoneyCommand.cs" />
-    <Compile Include="Commands\SelectUserCommand.cs" />
     <Compile Include="Commands\TransactionBetweenClientsCommand.cs" />
     <Compile Include="Commands\TransactionWithSelfAccountsCommand.cs" />
     <Compile Include="Commands\WithdrawMoneyCommand.cs" />

@@ -36,10 +36,14 @@ namespace SimpleBank.Commands
         string totalAccountTo = "";
         string stringQuery = "";
         SQLiteCommand SqliteCmd = new SQLiteCommand();
+        private event Action<string, string, int?> RecordOperation;
+        private event Action RefreshListOperations;
 
         public TransactionBetweenClientsCommand(ObservableCollection<Person> persons)
         {
             _persons = persons;
+            RecordOperation += App.recordOperation.RecordOperationToBD;
+            RefreshListOperations += App.refreshData.RefreshDataToUserOptionsWindow;
         }
 
         ErrorMessage errorMessage = new ErrorMessage();
@@ -245,8 +249,14 @@ namespace SimpleBank.Commands
                         return;
                     }
 
-                    App.mainWindow.lbPersonsItems.ItemsSource = _persons;
-                    App.mainWindow.lbPersonsItems.Items.Refresh();
+                    string info = "Перевод денег со счета " + "\"" + chooseAccountFrom.Content.ToString() + "\""
+                                            + " клиента : " + App.abbreviatedName.GetFIO(personSend) 
+                                            + " \nна счет " + "\"" + chooseAccountTo.Content.ToString() + "\""
+                                            + " клиента : " + App.abbreviatedName.GetFIO(personRecieve);
+
+                    RecordOperation?.Invoke(App.mainWindow.Title, info, inputNumber);
+                    App.refreshData.RefreshDataPersons();
+                    RefreshListOperations?.Invoke();
                 }
                 catch (Exception ex)
                 {

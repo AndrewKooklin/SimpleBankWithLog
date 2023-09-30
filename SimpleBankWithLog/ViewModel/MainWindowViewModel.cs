@@ -106,7 +106,7 @@ namespace SimpleBank.ViewModel
 
         public ICommand OpenListOperationsCommand { get; set; }
 
-        public ICommand SelectUserCommand { get; set; }
+        //public ICommand SelectUserCommand { get; set; }
 
         public int? SelectedIndexPerson { get; set; }
 
@@ -132,7 +132,6 @@ namespace SimpleBank.ViewModel
                     SelectedIndexPerson = App.mainWindow.lbPersonsItems.SelectedIndex;
 
                     var view = (PersonView)RightCurrentView;
-                    //SelectedIndexPerson = _selectedPerson.PersonId;
                     view.tbSelectedIndexPerson.Text = SelectedIndexPerson.ToString();
                     view.tbPersonId.Text = _selectedPerson.PersonId.ToString();
                     view.tbLastName.Text = _selectedPerson.LastName;
@@ -148,16 +147,7 @@ namespace SimpleBank.ViewModel
                     
                     if (_selectedPerson != null) 
                     {  
-                        string firstLetterFirstName = _selectedPerson.FirstName
-                                                                    .ToUpper()
-                                                                    .Substring(0,1);
-                        string firstLetterFathersName = _selectedPerson.FathersName
-                                                                      .ToUpper()
-                                                                      .Substring(0, 1);
-
-                        view.tbFIO.Text  = _selectedPerson.LastName + " "
-                                        + firstLetterFirstName + "." 
-                                        + firstLetterFathersName + ".";
+                        view.tbFIO.Text  = App.abbreviatedName.GetFIO(_selectedPerson);
 
                         view.tbAccountId.Text = _selectedPerson.PersonId.ToString();
                     }
@@ -169,16 +159,7 @@ namespace SimpleBank.ViewModel
 
                     if (_selectedPerson != null)
                     {
-                        string firstLetterFirstName = _selectedPerson.FirstName
-                                                                    .ToUpper()
-                                                                    .Substring(0, 1);
-                        string firstLetterFathersName = _selectedPerson.FathersName
-                                                                      .ToUpper()
-                                                                      .Substring(0, 1);
-
-                        view.tbFIO.Text = _selectedPerson.LastName + " "
-                                        + firstLetterFirstName + "."
-                                        + firstLetterFathersName + ".";
+                        view.tbFIO.Text = App.abbreviatedName.GetFIO(_selectedPerson);
 
                         view.tbAccountId.Text = _selectedPerson.PersonId.ToString();
                     }
@@ -190,16 +171,7 @@ namespace SimpleBank.ViewModel
 
                     if (_selectedPerson != null && _selectedCount == 0)
                     {
-                        string firstLetterFirstName = _selectedPerson.FirstName
-                                                                    .ToUpper()
-                                                                    .Substring(0, 1);
-                        string firstLetterFathersName = _selectedPerson.FathersName
-                                                                      .ToUpper()
-                                                                      .Substring(0, 1);
-
-                        view.tbFIOFrom.Text = _selectedPerson.LastName + " "
-                                        + firstLetterFirstName + "."
-                                        + firstLetterFathersName + ".";
+                        view.tbFIOFrom.Text = App.abbreviatedName.GetFIO(_selectedPerson);
 
                         view.tbAccountIdFrom.Text = _selectedPerson.PersonId.ToString();
 
@@ -207,16 +179,7 @@ namespace SimpleBank.ViewModel
                     }
                     else if(_selectedPerson != null && _selectedCount == 1)
                     {
-                        string firstLetterFirstName = _selectedPerson.FirstName
-                                                                    .ToUpper()
-                                                                    .Substring(0, 1);
-                        string firstLetterFathersName = _selectedPerson.FathersName
-                                                                      .ToUpper()
-                                                                      .Substring(0, 1);
-
-                        view.tbFIOTo.Text = _selectedPerson.LastName + " "
-                                        + firstLetterFirstName + "."
-                                        + firstLetterFathersName + ".";
+                        view.tbFIOTo.Text = App.abbreviatedName.GetFIO(_selectedPerson);
 
                         view.tbAccountIdTo.Text = _selectedPerson.PersonId.ToString();
 
@@ -275,7 +238,7 @@ namespace SimpleBank.ViewModel
 
             OpenListOperationsCommand = new OpenListOperationsCommand(_db);
 
-            SelectUserCommand = new SelectUserCommand();
+            //SelectUserCommand = new SelectUserCommand();
         }
 
         
